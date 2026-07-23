@@ -1,0 +1,10 @@
+{
+  "title": "Wins Ledger",
+  "add_win": "Add a Win",
+  "win_description": "What did you accomplish?",
+  "win_impact": "What was the impact?",
+  "win_date": "Date",
+  "win_value": "Estimated value (optional)",
+  "total_raised": "Total Raised",
+  "empty_state": "No wins yet. Start logging your accomplishments!"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "raiseher",
+  "version": "1.0.0",
+  "main": "expo-router/entry",
+  "dependencies": {
+    "@clerk/clerk-expo": "^2.19.31",
+    "convex": "^1.42.3",
+    "expo": "~57.0.8",
+    "expo-constants": "~57.0.7",
+    "expo-linking": "~57.0.4",
+    "expo-localization": "^57.0.1",
+    "expo-router": "~57.0.8",
+    "expo-secure-store": "~57.0.1",
+    "expo-status-bar": "~57.0.1",
+    "expo-web-browser": "~57.0.2",
+    "i18next": "^26.3.6",
+    "react": "19.2.3",
+    "react-i18next": "^17.0.11",
+    "react-native": "0.86.0",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "~4.26.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "typescript": "~6.0.3"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "convex": "convex dev",
+    "convex:deploy": "convex deploy",
+    "lint": "expo lint"
+  },
+  "private": true
+}

@@ -1,0 +1,20 @@
+{
+  "welcome_title": "Welcome to RaiseHER",
+  "welcome_subtitle": "Know your worth. Raise your pay.",
+  "choose_language": "Choose your language",
+  "sign_up": "Create account",
+  "sign_in": "Sign in",
+  "google_sign_in": "Continue with Google",
+  "apple_sign_in": "Continue with Apple",
+  "paygap_title": "Your Pay Gap Profile",
+  "paygap_subtitle": "Let us show you the gap — and how to close it.",
+  "paygap_industry": "What industry do you work in?",
+  "paygap_role": "What is your current role?",
+  "paygap_years": "Years of experience",
+  "paygap_location": "Location (city or country)",
+  "paygap_salary": "Your current annual salary",
+  "paygap_currency": "Currency",
+  "quick_start": "Get started",
+  "result_title": "Your Pay Gap",
+  "result_subtitle": "Based on aggregated public labor-market statistics"
+}
