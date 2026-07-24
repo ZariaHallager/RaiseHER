@@ -41,3 +41,15 @@ yarn-error.*
 /android
 .vercel
 .env*
+
+# Next.js build output
+.next/
+out/
+
+# Playwright
+test-results/
+playwright-report/
+
+# Skills and agent caches (local only)
+.agents/
+.claude/
