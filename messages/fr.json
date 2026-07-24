@@ -151,7 +151,13 @@
     "win_date": "Date",
     "win_description": "Qu'avez-vous accompli ?",
     "win_impact": "Quel a été l'impact ?",
-    "win_value": "Valeur estimée (optionnel)"
+    "win_value": "Valeur estimée (optionnel)",
+    "wins_count_one": "{{count}} réussite",
+    "wins_count_other": "{{count}} réussites",
+    "date_from": "Du",
+    "date_to": "Au",
+    "clear_dates": "Effacer les dates",
+    "followup_input_placeholder": "Partagez plus de détails ici..."
   },
   "settings": {
     "title": "Paramètres",
@@ -195,7 +201,19 @@
     "data_delete_confirm_action": "Envoyer la demande",
     "password_reset_sent": "Les instructions de réinitialisation du mot de passe ont été envoyées à votre adresse e-mail.",
     "app_version": "Version",
-    "google_gemini_disclosure": "Fonctionnalités IA propulsées par Google Gemini"
+    "google_gemini_disclosure": "Fonctionnalités IA propulsées par Google Gemini",
+    "view": "Voir",
+    "privacy_collect_heading": "Ce que nous collectons",
+    "privacy_collect_body_1": "Votre adresse e-mail et nom de compte depuis Clerk. Vos réponses au questionnaire d’écart salarial, l’analyse générée par l’IA et le résultat de référence. Les entrées de votre journal des réussites: descriptions, déclarations d’impact, dates, valeurs et étiquettes.",
+    "privacy_collect_body_2": "Nous ne vendons pas vos données. Nous ne les partageons pas avec des annonceurs. Nous ne les utilisons pas pour entraîner des modèles d’IA sans votre consentement explicite.",
+    "privacy_use_heading": "Comment nous les utilisons",
+    "privacy_use_body_1": "Vos données d’écart salarial et vos réussites sont envoyées à Google Gemini pour générer des analyses et améliorer vos descriptions. Gemini traite vos données conformément aux conditions de Google et ne les utilise pas pour améliorer Gemini, sauf si vous l’autorisez dans vos paramètres Google.",
+    "privacy_use_body_2": "Des statistiques agrégées et anonymisées (nombre total d’utilisatrices, pourcentage d’écart moyen) sont calculées pour mesurer l’impact de la plateforme. Aucune personne ne peut être identifiée à partir de ces statistiques.",
+    "privacy_controls_heading": "Vos contrôles",
+    "privacy_controls_body_1": "Vous pouvez supprimer n’importe quelle réussite depuis le Journal des Réussites. Vous pouvez relancer votre analyse d’écart salarial pour mettre à jour vos données. Vous pouvez demander la suppression complète de vos données RaiseHER en utilisant le bouton ci-dessous.",
+    "privacy_controls_body_2": "Les demandes de suppression de données sont traitées dans les 30 jours. Après soumission, vous serez déconnecté immédiatement. Cette action est irréversible.",
+    "privacy_docs_heading": "Documents",
+    "get_started": "Commencer"
   },
   "rehearsal": {
     "title": "Salle de répétition",
@@ -286,7 +304,12 @@
     "share_page_title": "Résumé du Dossier d'Augmentation",
     "share_page_subtitle": "Partagé via RaiseHER",
     "no_wins_label": "Aucune victoire enregistrée.",
-    "not_found_error": "Dossier introuvable."
+    "not_found_error": "Dossier introuvable.",
+    "share_not_found_title": "Résumé introuvable",
+    "share_not_found_body": "Ce lien a peut-être expiré ou été supprimé.",
+    "share_cta_link": "Crée le tien sur RaiseHER",
+    "share_print": "Imprimer",
+    "share_build_cta": "Crée le Tien"
   },
   "marketing": {
     "hero_headline": "Connaissez votre valeur. Augmentez votre salaire.",

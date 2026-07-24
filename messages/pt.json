@@ -151,7 +151,13 @@
     "win_date": "Data",
     "win_description": "O que você conquistou?",
     "win_impact": "Qual foi o impacto?",
-    "win_value": "Valor estimado (opcional)"
+    "win_value": "Valor estimado (opcional)",
+    "wins_count_one": "{{count}} conquista",
+    "wins_count_other": "{{count}} conquistas",
+    "date_from": "De",
+    "date_to": "Até",
+    "clear_dates": "Limpar datas",
+    "followup_input_placeholder": "Compartilhe mais detalhes aqui..."
   },
   "settings": {
     "title": "Configurações",
@@ -195,7 +201,19 @@
     "data_delete_confirm_action": "Enviar solicitação",
     "password_reset_sent": "As instruções de redefinição de senha foram enviadas para seu e-mail.",
     "app_version": "Versão",
-    "google_gemini_disclosure": "Funcionalidades de IA fornecidas pelo Google Gemini"
+    "google_gemini_disclosure": "Funcionalidades de IA fornecidas pelo Google Gemini",
+    "view": "Ver",
+    "privacy_collect_heading": "O que coletamos",
+    "privacy_collect_body_1": "Seu e-mail e nome de conta do Clerk. Suas respostas do questionário de diferença salarial, a análise gerada por IA e o resultado de referência. As entradas do seu registro de conquistas: descrições, declarações de impacto, datas, valores e tags.",
+    "privacy_collect_body_2": "Não vendemos seus dados. Não os compartilhamos com anunciantes. Não os usamos para treinar modelos de IA sem seu consentimento explícito.",
+    "privacy_use_heading": "Como usamos",
+    "privacy_use_body_1": "Seus dados de diferença salarial e conquistas são enviados ao Google Gemini para gerar análises e aprimorar suas descrições. O Gemini processa seus dados de acordo com os termos do Google e não os usa para melhorar o Gemini, a menos que você opte por isso nas configurações do Google.",
+    "privacy_use_body_2": "Estatísticas agregadas e anonimizadas (total de usuárias, percentual médio de diferença) são calculadas para medir o impacto da plataforma. Nenhuma pessoa pode ser identificada a partir dessas estatísticas.",
+    "privacy_controls_heading": "Seus controles",
+    "privacy_controls_body_1": "Você pode excluir qualquer conquista a qualquer momento no Registro de Conquistas. Você pode refazer sua análise de diferença salarial para atualizar seus dados. Você pode solicitar a exclusão completa dos seus dados do RaiseHER usando o botão abaixo.",
+    "privacy_controls_body_2": "As solicitações de exclusão são processadas em até 30 dias. Após o envio, você será desconectado imediatamente. Esta ação não pode ser desfeita.",
+    "privacy_docs_heading": "Documentos",
+    "get_started": "Começar"
   },
   "rehearsal": {
     "title": "Sala de Ensaio",
@@ -286,7 +304,12 @@
     "share_page_title": "Resumo do Dossiê de Aumento",
     "share_page_subtitle": "Compartilhado via RaiseHER",
     "no_wins_label": "Nenhuma conquista registrada ainda.",
-    "not_found_error": "Dossiê não encontrado."
+    "not_found_error": "Dossiê não encontrado.",
+    "share_not_found_title": "Resumo não encontrado",
+    "share_not_found_body": "Este link pode ter expirado ou sido removido.",
+    "share_cta_link": "Crie o seu no RaiseHER",
+    "share_print": "Imprimir",
+    "share_build_cta": "Crie o Seu"
   },
   "marketing": {
     "hero_headline": "Conheça seu valor. Aumente seu salário.",

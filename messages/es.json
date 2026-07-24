@@ -151,7 +151,13 @@
     "win_date": "Fecha",
     "win_description": "¿Qué lograste?",
     "win_impact": "¿Cuál fue el impacto?",
-    "win_value": "Valor estimado (opcional)"
+    "win_value": "Valor estimado (opcional)",
+    "wins_count_one": "{{count}} logro",
+    "wins_count_other": "{{count}} logros",
+    "date_from": "Desde",
+    "date_to": "Hasta",
+    "clear_dates": "Borrar fechas",
+    "followup_input_placeholder": "Comparte más detalles aquí..."
   },
   "settings": {
     "title": "Configuración",
@@ -195,7 +201,19 @@
     "data_delete_confirm_action": "Enviar solicitud",
     "password_reset_sent": "Se han enviado las instrucciones de restablecimiento de contraseña a tu correo.",
     "app_version": "Versión",
-    "google_gemini_disclosure": "Funciones de IA impulsadas por Google Gemini"
+    "google_gemini_disclosure": "Funciones de IA impulsadas por Google Gemini",
+    "view": "Ver",
+    "privacy_collect_heading": "Qué recopilamos",
+    "privacy_collect_body_1": "Tu correo y nombre de cuenta desde Clerk. Tus respuestas del cuestionario de brecha salarial, el análisis generado por IA y el resultado de referencia. Las entradas de tu registro de logros: descripciones, declaraciones de impacto, fechas, valores y etiquetas.",
+    "privacy_collect_body_2": "No vendemos tus datos. No los compartimos con anunciantes. No los usamos para entrenar modelos de IA sin tu consentimiento explícito.",
+    "privacy_use_heading": "Cómo los usamos",
+    "privacy_use_body_1": "Tus datos de brecha salarial y logros se envían a Google Gemini para generar análisis y mejorar las descripciones de tus logros. Gemini procesa tus datos conforme a los términos de procesamiento de datos de Google y no los usa para mejorar Gemini a menos que lo permitas en tu configuración de Google.",
+    "privacy_use_body_2": "Se calculan estadísticas agregadas y anonimizadas (total de usuarias, porcentaje de brecha promedio) para medir el impacto de la plataforma. Ninguna persona puede ser identificada a partir de estas estadísticas.",
+    "privacy_controls_heading": "Tus controles",
+    "privacy_controls_body_1": "Puedes eliminar cualquier logro individual en cualquier momento desde el Registro de Logros. Puedes volver a ejecutar tu análisis de brecha salarial para actualizar tus datos. Puedes solicitar la eliminación completa de tus datos de RaiseHER usando el botón a continuación.",
+    "privacy_controls_body_2": "Las solicitudes de eliminación se procesan en un plazo de 30 días. Tras enviar la solicitud, tu sesión se cerrará de inmediato. Esta acción no se puede deshacer.",
+    "privacy_docs_heading": "Documentos",
+    "get_started": "Comenzar"
   },
   "rehearsal": {
     "title": "Sala de Ensayo",
@@ -286,7 +304,12 @@
     "share_page_title": "Resumen de Caso de Aumento",
     "share_page_subtitle": "Compartido vía RaiseHER",
     "no_wins_label": "Aún no hay logros registrados.",
-    "not_found_error": "Expediente no encontrado."
+    "not_found_error": "Expediente no encontrado.",
+    "share_not_found_title": "Resumen no encontrado",
+    "share_not_found_body": "Este enlace puede haber expirado o sido eliminado.",
+    "share_cta_link": "Crea el tuyo en RaiseHER",
+    "share_print": "Imprimir",
+    "share_build_cta": "Crea el Tuyo"
   },
   "marketing": {
     "hero_headline": "Conoce tu valor. Aumenta tu salario.",
