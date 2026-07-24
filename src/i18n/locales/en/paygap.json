@@ -2,7 +2,16 @@
   "benchmark_label": "Industry Benchmark",
   "gap_label": "Your Gap",
   "potential_label": "Annual Potential",
+  "current_salary_label": "Current Salary",
+  "gap_pct_label": "Gap Percentage",
   "gap_source": "Source: Aggregated public labor-market statistics",
   "ai_generated": "AI-analyzed",
-  "recalculate": "Recalculate"
+  "ai_analysis_label": "AI Analysis",
+  "recalculate": "Recalculate",
+  "loading_analysis": "Analyzing your pay gap...",
+  "loading_detail": "Our AI is benchmarking your role against public labor-market data. This usually takes under 30 seconds.",
+  "disclosure": "AI-generated analysis based on aggregated public labor-market statistics. Provided for informational purposes only; not legal or financial advice.",
+  "quick_start_cta": "Build My Negotiation Plan",
+  "quick_start_creating": "Setting up your plan...",
+  "estimate_framing": "This estimate reflects median compensation for your role, industry, and location based on aggregated public data."
 }

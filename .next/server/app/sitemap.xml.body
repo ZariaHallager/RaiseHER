@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url>
+<loc>http://localhost:3000/en</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt" />
+<lastmod>2026-07-24T23:00:51.213Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>http://localhost:3000/es</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt" />
+<lastmod>2026-07-24T23:00:51.213Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>http://localhost:3000/fr</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt" />
+<lastmod>2026-07-24T23:00:51.213Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>http://localhost:3000/pt</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt" />
+<lastmod>2026-07-24T23:00:51.213Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>http://localhost:3000/en/pricing</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/pricing" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/pricing" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/pricing" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/pricing" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/pricing" />
+<lastmod>2026-07-24T23:00:51.213Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/es/pricing</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/pricing" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/pricing" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/pricing" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/pricing" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/pricing" />
+<lastmod>2026-07-24T23:00:51.213Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/fr/pricing</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/pricing" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/pricing" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/pricing" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/pricing" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/pricing" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/pt/pricing</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/pricing" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/pricing" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/pricing" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/pricing" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/pricing" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/en/privacy</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/privacy" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/privacy" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/privacy" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/privacy" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/privacy" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/es/privacy</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/privacy" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/privacy" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/privacy" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/privacy" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/privacy" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/fr/privacy</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/privacy" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/privacy" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/privacy" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/privacy" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/privacy" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/pt/privacy</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/privacy" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/privacy" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/privacy" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/privacy" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/privacy" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/en/terms</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/terms" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/terms" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/terms" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/terms" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/terms" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/es/terms</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/terms" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/terms" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/terms" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/terms" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/terms" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/fr/terms</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/terms" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/terms" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/terms" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/terms" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/terms" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/pt/terms</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/terms" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/terms" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/terms" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/terms" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/terms" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
+<loc>http://localhost:3000/en/wins</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/wins" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/wins" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/wins" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/wins" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/wins" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/es/wins</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/wins" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/wins" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/wins" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/wins" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/wins" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/fr/wins</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/wins" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/wins" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/wins" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/wins" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/wins" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/pt/wins</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/wins" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/wins" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/wins" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/wins" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/wins" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/en/pay-gap</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/pay-gap" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/pay-gap" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/pay-gap" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/pay-gap" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/pay-gap" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/es/pay-gap</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/pay-gap" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/pay-gap" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/pay-gap" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/pay-gap" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/pay-gap" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/fr/pay-gap</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/pay-gap" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/pay-gap" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/pay-gap" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/pay-gap" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/pay-gap" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/pt/pay-gap</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/pay-gap" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/pay-gap" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/pay-gap" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/pay-gap" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/pay-gap" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/en/rehearsal</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/rehearsal" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/rehearsal" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/rehearsal" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/rehearsal" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/rehearsal" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/es/rehearsal</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/rehearsal" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/rehearsal" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/rehearsal" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/rehearsal" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/rehearsal" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/fr/rehearsal</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/rehearsal" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/rehearsal" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/rehearsal" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/rehearsal" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/rehearsal" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/pt/rehearsal</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/rehearsal" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/rehearsal" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/rehearsal" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/rehearsal" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/rehearsal" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/en/case-files</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/case-files" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/case-files" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/case-files" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/case-files" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/case-files" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/es/case-files</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/case-files" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/case-files" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/case-files" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/case-files" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/case-files" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/fr/case-files</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/case-files" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/case-files" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/case-files" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/case-files" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/case-files" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/pt/case-files</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/case-files" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/case-files" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/case-files" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/case-files" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/case-files" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/en/circle</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/circle" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/circle" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/circle" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/circle" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/circle" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/es/circle</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/circle" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/circle" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/circle" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/circle" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/circle" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/fr/circle</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/circle" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/circle" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/circle" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/circle" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/circle" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>http://localhost:3000/pt/circle</loc>
+<xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/en/circle" />
+<xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/en/circle" />
+<xhtml:link rel="alternate" hreflang="es" href="http://localhost:3000/es/circle" />
+<xhtml:link rel="alternate" hreflang="fr" href="http://localhost:3000/fr/circle" />
+<xhtml:link rel="alternate" hreflang="pt-BR" href="http://localhost:3000/pt/circle" />
+<lastmod>2026-07-24T23:00:51.214Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+</urlset>

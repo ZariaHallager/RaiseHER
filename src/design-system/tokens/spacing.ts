@@ -1,5 +1,5 @@
 /**
- * Spacing scale — base unit 4, fixed multiples.
+ * Spacing scale, base unit 4, fixed multiples.
  * Use these tokens everywhere; never hardcode spacing values.
  */
 export const spacing = {
@@ -19,11 +19,16 @@ export const spacing = {
 export type SpacingToken = keyof typeof spacing
 
 /**
- * Corner radii — exactly two values per design system rules.
+ * Corner radii, exactly two values per design system rules.
  *   sm: tags, badges, chips
  *   lg: cards, buttons, modals
+ * Fully round controls (toggle track/thumb, calendar day dots) use
+ * radius = size / 2, which is a circular shape rather than a corner-radius
+ * style choice, so it is intentionally outside this two-value scale.
  */
 export const radii = {
   sm: 8,
   lg: 16,
 } as const
+
+export type RadiusToken = keyof typeof radii

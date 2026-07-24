@@ -1,1 +1,18 @@
-{"app_name":"RaiseHER","continue":"Continuer","back":"Retour","save":"Enregistrer","cancel":"Annuler","done":"Terminer","loading":"Chargement...","error_generic":"Une erreur s'est produite. Veuillez reessayer.","sign_out":"Se deconnecter","today":"Aujourd'hui"}
+{
+    "app_name": "RaiseHER",
+    "continue": "Continuer",
+    "back": "Retour",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "done": "Terminer",
+    "loading": "Chargement...",
+    "error_generic": "Une erreur s'est produite. Veuillez réessayer.",
+    "field_required": "Ce champ est obligatoire",
+    "sign_out": "Se déconnecter",
+    "today": "Aujourd'hui",
+    "wins": "Réussites",
+    "rehearsal": "Entraînement",
+    "case_files": "Dossiers",
+    "circle": "Cercle",
+    "profile": "Profil"
+}

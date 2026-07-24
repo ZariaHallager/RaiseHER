@@ -7,6 +7,12 @@
   "done": "Done",
   "loading": "Loading...",
   "error_generic": "Something went wrong. Please try again.",
+  "field_required": "This field is required",
   "sign_out": "Sign Out",
-  "today": "Today"
+  "today": "Today",
+  "wins": "Wins",
+  "rehearsal": "Rehearsal",
+  "case_files": "Case Files",
+  "circle": "Circle",
+  "profile": "Profile"
 }

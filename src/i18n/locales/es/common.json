@@ -1,1 +1,18 @@
-{"app_name":"RaiseHER","continue":"Continuar","back":"Volver","save":"Guardar","cancel":"Cancelar","done":"Listo","loading":"Cargando...","error_generic":"Algo salio mal. Por favor, intenta de nuevo.","sign_out":"Cerrar sesion","today":"Hoy"}
+{
+    "app_name": "RaiseHER",
+    "continue": "Continuar",
+    "back": "Volver",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "done": "Listo",
+    "loading": "Cargando...",
+    "error_generic": "Algo salió mal. Por favor, inténtalo de nuevo.",
+    "field_required": "Este campo es obligatorio",
+    "sign_out": "Cerrar sesión",
+    "today": "Hoy",
+    "wins": "Logros",
+    "rehearsal": "Ensayo",
+    "case_files": "Casos",
+    "circle": "Comunidad",
+    "profile": "Perfil"
+}

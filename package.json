@@ -1,37 +1,52 @@
 {
   "name": "raiseher",
   "version": "1.0.0",
-  "main": "expo-router/entry",
-  "dependencies": {
-    "@clerk/clerk-expo": "^2.19.31",
-    "convex": "^1.42.3",
-    "expo": "~57.0.8",
-    "expo-constants": "~57.0.7",
-    "expo-linking": "~57.0.4",
-    "expo-localization": "^57.0.1",
-    "expo-router": "~57.0.8",
-    "expo-secure-store": "~57.0.1",
-    "expo-status-bar": "~57.0.1",
-    "expo-web-browser": "~57.0.2",
-    "i18next": "^26.3.6",
-    "react": "19.2.3",
-    "react-i18next": "^17.0.11",
-    "react-native": "0.86.0",
-    "react-native-safe-area-context": "~5.7.0",
-    "react-native-screens": "~4.26.0"
-  },
-  "devDependencies": {
-    "@types/react": "~19.2.2",
-    "typescript": "~6.0.3"
-  },
+  "private": true,
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "verify:tokens": "node scripts/verify-contrast.mjs",
     "convex": "convex dev",
     "convex:deploy": "convex deploy",
-    "lint": "expo lint"
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
+    "test:a11y": "playwright test tests/e2e/01-landing-a11y.spec.ts tests/e2e/10-voiceover-checklist.spec.ts tests/e2e/11-color-contrast.spec.ts --project=desktop-1280",
+    "test:responsive": "playwright test tests/e2e/02-responsive.spec.ts",
+    "test:keyboard": "playwright test tests/e2e/09-keyboard-traversal.spec.ts --project=desktop-1280",
+    "test:motion": "playwright test tests/e2e/12-motion-prefers-reduced.spec.ts --project=desktop-1280",
+    "test:flows": "playwright test tests/e2e/04-pay-gap-flow.spec.ts tests/e2e/05-wins-flow.spec.ts tests/e2e/06-rehearsal-flow.spec.ts tests/e2e/07-case-files-flow.spec.ts tests/e2e/08-circle-flow.spec.ts --project=desktop-1280"
   },
-  "private": true
+  "dependencies": {
+    "@clerk/localizations": "^4.13.8",
+    "@clerk/nextjs": "^6.22.0",
+    "@google/generative-ai": "^0.24.1",
+    "convex": "^1.42.3",
+    "i18next": "^26.3.6",
+    "motion": "^12.15.0",
+    "next": "^15.3.4",
+    "next-intl": "^4.3.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-i18next": "^17.0.11",
+    "stripe": "^18.3.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.62.0",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^15.3.4",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "tailwindcss": "^4.1.11",
+    "typescript": "~5.9.2"
+  },
+  "engines": {
+    "node": ">=20.12.0"
+  }
 }

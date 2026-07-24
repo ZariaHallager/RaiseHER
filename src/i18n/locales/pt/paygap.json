@@ -1,1 +1,17 @@
-{"benchmark_label":"Referencia do Setor","gap_label":"Sua Diferenca","potential_label":"Potencial Anual","gap_source":"Fonte: Estatisticas publicas do mercado de trabalho","ai_generated":"Analisado por IA","recalculate":"Recalcular"}
+{
+  "benchmark_label": "Referência do Setor",
+  "gap_label": "Sua Diferença",
+  "potential_label": "Potencial Anual",
+  "current_salary_label": "Salário Atual",
+  "gap_pct_label": "Percentual da Diferença",
+  "gap_source": "Fonte: Estatísticas públicas do mercado de trabalho",
+  "ai_generated": "Analisado por IA",
+  "ai_analysis_label": "Análise de IA",
+  "recalculate": "Recalcular",
+  "loading_analysis": "Analisando sua diferença salarial...",
+  "loading_detail": "Nossa IA está comparando sua função com dados públicos do mercado de trabalho. Isso geralmente leva menos de 30 segundos.",
+  "disclosure": "Análise gerada por IA com base em estatísticas públicas agregadas do mercado de trabalho. Apenas para fins informativos; não constitui aconselhamento jurídico ou financeiro.",
+  "quick_start_cta": "Construir Meu Plano de Negociação",
+  "quick_start_creating": "Preparando seu plano...",
+  "estimate_framing": "Esta estimativa reflete a remuneração mediana para sua função, setor e localização com base em dados públicos agregados."
+}

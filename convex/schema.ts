@@ -1,5 +1,5 @@
 /**
- * Convex schema — RaiseHER, Part One (Builder One)
+ * Convex schema: RaiseHER, Part One (Builder One)
  *
  * Builder One owns: users, payGapProfiles, wins, agentActivityLog,
  *   aggregatePlatformStats, localizationStrings, supportMessages,
@@ -135,7 +135,7 @@ export default defineSchema({
   }).index('by_status', ['status']),
 
   /**
-   * Revenue entries — from Stripe webhook (web checkout) and RevenueCat IAP.
+   * Revenue entries: from Stripe webhook (web checkout) and RevenueCat IAP.
    * Feeds the Finance agent and the P&L tracker in the Agent Ops Dashboard.
    */
   revenueEntries: defineTable({
@@ -150,7 +150,7 @@ export default defineSchema({
   }).index('by_recorded_at', ['recordedAt']),
 
   /**
-   * Expense entries — manually entered or agent-drafted.
+   * Expense entries: manually entered or agent-drafted.
    * Feeds the Finance agent P&L tracker.
    */
   expenseEntries: defineTable({
@@ -194,25 +194,84 @@ export default defineSchema({
 
   rehearsalSessions: defineTable({
     userId: v.id('users'),
-    scenarioId: v.id('scenarios'),
+    scenarioId: v.optional(v.id('scenarios')), // null for built-in scenarios
+    scenarioKey: v.string(), // e.g. 'ask_raise' | 'negotiate_offer' | 'handle_deflection' | 'negotiate_promotion'
     status: v.string(), // 'in_progress' | 'completed'
+    language: v.string(), // BCP-47 locale e.g. 'en' | 'es' | 'fr' | 'pt'
+    turnCount: v.number(), // denormalized for quick display
+    scorecard: v.optional(v.any()), // ScorecardResult stored after completion
     startedAt: v.number(),
     completedAt: v.optional(v.number()),
-  }).index('by_user', ['userId']),
+  })
+    .index('by_user', ['userId'])
+    .index('by_user_started', ['userId', 'startedAt']),
+
+  rehearsalTurns: defineTable({
+    sessionId: v.id('rehearsalSessions'),
+    userId: v.id('users'),
+    role: v.string(), // 'user' | 'ai'
+    content: v.string(),
+    inputMode: v.optional(v.string()), // 'voice' | 'text' (for user turns only)
+    createdAt: v.number(),
+  })
+    .index('by_session', ['sessionId'])
+    .index('by_session_created', ['sessionId', 'createdAt']),
 
   caseFiles: defineTable({
     userId: v.id('users'),
     title: v.string(),
+    /** 'generating' while the AI action is running, 'ready' on success, 'error' on failure. */
+    status: v.string(),
+    /** BCP-47 locale the brief was generated in, e.g. 'en' | 'es' | 'fr' | 'pt'. */
+    language: v.string(),
+    /** Pay gap profile snapshot used at generation time. */
+    payGapProfileId: v.optional(v.id('payGapProfiles')),
+    /** Structured brief JSON produced by the AI action. */
+    brief: v.optional(v.any()),
+    /** Win IDs that were incorporated into the brief — the referencing relationship. */
+    includedWinIds: v.optional(v.array(v.id('wins'))),
+    /** Opaque token for the public share link. Generated on first share. */
+    shareToken: v.optional(v.string()),
+    errorMessage: v.optional(v.string()),
+    geminiModelUsed: v.optional(v.string()),
+    promptTokens: v.optional(v.number()),
+    completionTokens: v.optional(v.number()),
     createdAt: v.number(),
-  }).index('by_user', ['userId']),
+    updatedAt: v.number(),
+  })
+    .index('by_user', ['userId'])
+    .index('by_user_created', ['userId', 'createdAt'])
+    .index('by_share_token', ['shareToken']),
 
+  /**
+   * User-reported outcomes (raises, promotions, new jobs).
+   * Used to power The Circle's anonymous aggregate stats.
+   * No free-text post content — structured fields only.
+   * raiseAmountUsd is a best-effort USD normalization stored at write time.
+   */
   outcomes: defineTable({
     userId: v.id('users'),
     rehearsalSessionId: v.optional(v.id('rehearsalSessions')),
+    outcomeType: v.string(), // 'raise' | 'promotion' | 'new_job' | 'other'
     raiseAmount: v.optional(v.number()),
     currency: v.optional(v.string()),
+    raiseAmountUsd: v.optional(v.number()), // best-effort USD normalization
     recordedAt: v.number(),
-  }).index('by_user', ['userId']),
+  })
+    .index('by_user', ['userId'])
+    .index('by_recorded_at', ['recordedAt']),
+
+  /**
+   * Single-row aggregate for The Circle.
+   * Updated in the same mutation as every outcome insert/update.
+   * The query enforces a minimum-cohort threshold before returning stats.
+   */
+  circleStats: defineTable({
+    statKey: v.string(), // always 'circle_v1'
+    totalRaisedUsd: v.number(),
+    outcomeCount: v.number(),
+    computedAt: v.number(),
+  }).index('by_key', ['statKey']),
 
   testimonialConsent: defineTable({
     userId: v.id('users'),

@@ -1,5 +1,5 @@
 /**
- * Type scale — 6 tokens.
+ * Type scale, 6 tokens.
  * Distinctive display face + legible body face.
  * Both verified for Latin-1 / accented glyphs (es, fr, pt).
  *

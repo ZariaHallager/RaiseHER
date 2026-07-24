@@ -1,1 +1,17 @@
-{"benchmark_label":"Reference du Secteur","gap_label":"Votre Ecart","potential_label":"Potentiel Annuel","gap_source":"Source: Statistiques publiques du marche du travail","ai_generated":"Analyse par IA","recalculate":"Recalculer"}
+{
+  "benchmark_label": "Référence du Secteur",
+  "gap_label": "Votre Écart",
+  "potential_label": "Potentiel Annuel",
+  "current_salary_label": "Salaire Actuel",
+  "gap_pct_label": "Pourcentage d'Écart",
+  "gap_source": "Source : Statistiques publiques du marché du travail",
+  "ai_generated": "Analysé par IA",
+  "ai_analysis_label": "Analyse IA",
+  "recalculate": "Recalculer",
+  "loading_analysis": "Analyse de votre écart salarial...",
+  "loading_detail": "Notre IA compare votre rôle aux données publiques du marché du travail. Cela prend généralement moins de 30 secondes.",
+  "disclosure": "Analyse générée par IA basée sur des statistiques publiques agrégées du marché du travail. À titre informatif uniquement ; ne constitue pas un conseil juridique ou financier.",
+  "quick_start_cta": "Construire Mon Plan de Négociation",
+  "quick_start_creating": "Préparation de votre plan...",
+  "estimate_framing": "Cette estimation reflète la rémunération médiane pour votre rôle, votre secteur et votre lieu de travail, basée sur des données publiques agrégées."
+}

@@ -1,12 +1,12 @@
 /**
- * Agent Activity Log — shared mutation called by every agent.
+ * Agent Activity Log: shared mutation called by every agent.
  * The Agent Ops Dashboard reads from agentActivityLog via queries here.
  */
 import { internalMutation, query } from './_generated/server'
 import { v } from 'convex/values'
 
 /**
- * Internal mutation — called by agents only (not exposed to client).
+ * Internal mutation, called by agents only (not exposed to client).
  */
 export const logActivity = internalMutation({
   args: {
@@ -26,7 +26,7 @@ export const logActivity = internalMutation({
 })
 
 /**
- * Query — recent activity feed for Agent Ops Dashboard.
+ * Query: recent activity feed for Agent Ops Dashboard.
  * Only accessible to founders (client must verify isFounder before calling).
  */
 export const recentActivity = query({
@@ -52,7 +52,7 @@ export const recentActivity = query({
 })
 
 /**
- * Query — per-agent counts for the dashboard trend view.
+ * Query: per-agent counts for the dashboard trend view.
  */
 export const agentCounts = query({
   args: {},

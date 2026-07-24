@@ -1,1 +1,17 @@
-{"benchmark_label":"Referencia del Sector","gap_label":"Tu Brecha","potential_label":"Potencial Anual","gap_source":"Fuente: Estadisticas publicas de mercado laboral","ai_generated":"Analizado por IA","recalculate":"Recalcular"}
+{
+  "benchmark_label": "Referencia del Sector",
+  "gap_label": "Tu Brecha",
+  "potential_label": "Potencial Anual",
+  "current_salary_label": "Salario Actual",
+  "gap_pct_label": "Porcentaje de Brecha",
+  "gap_source": "Fuente: Estadísticas públicas del mercado laboral",
+  "ai_generated": "Analizado por IA",
+  "ai_analysis_label": "Análisis de IA",
+  "recalculate": "Recalcular",
+  "loading_analysis": "Analizando tu brecha salarial...",
+  "loading_detail": "Nuestra IA está comparando tu rol con datos públicos del mercado laboral. Esto suele tardar menos de 30 segundos.",
+  "disclosure": "Análisis generado por IA basado en estadísticas públicas del mercado laboral. Solo con fines informativos; no es asesoramiento legal ni financiero.",
+  "quick_start_cta": "Construir Mi Plan de Negociación",
+  "quick_start_creating": "Preparando tu plan...",
+  "estimate_framing": "Esta estimación refleja la compensación mediana para tu rol, industria y ubicación, basada en datos públicos agregados."
+}
