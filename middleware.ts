@@ -19,7 +19,7 @@
  */
 import createMiddleware from 'next-intl/middleware'
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
-import type { NextRequest } from 'next/server'
+import type { NextRequest, NextResponse } from 'next/server'
 import { routing } from './src/i18n/routing'
 
 const handleI18nRouting = createMiddleware(routing)
@@ -33,7 +33,7 @@ const isProtectedRoute = createRouteMatcher([
   '/:locale/settings(.*)',
 ])
 
-export default clerkMiddleware(async (auth, req: NextRequest) => {
+const clerkHandler = clerkMiddleware(async (auth, req: NextRequest) => {
   if (isProtectedRoute(req)) {
     await auth.protect()
   }
@@ -43,6 +43,18 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
   }
   return handleI18nRouting(req)
 })
+
+// Fall back to i18n-only routing when CLERK_SECRET_KEY is not configured.
+// This keeps public marketing pages reachable; protected routes redirect
+// nowhere useful until the key is set, which is the expected behavior.
+function i18nOnlyHandler(req: NextRequest): NextResponse {
+  if (req.nextUrl.pathname.startsWith('/share/')) {
+    return new Response(null, { status: 200 }) as unknown as NextResponse
+  }
+  return handleI18nRouting(req) as NextResponse
+}
+
+export default process.env.CLERK_SECRET_KEY ? clerkHandler : i18nOnlyHandler
 
 export const config = {
   matcher: [
