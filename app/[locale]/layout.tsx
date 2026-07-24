@@ -92,6 +92,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // Skip-link copy is infrastructure text, not translatable product copy.
 const SKIP_TO_MAIN = 'Skip to main content'
 
+/**
+ * Returns true when Clerk can be safely initialised in the current runtime.
+ *
+ * Development-mode publishable keys (pk_test_*) are restricted to localhost by
+ * Clerk's backend and will cause ClerkProvider to throw on any other domain.
+ * We allow them in development (NODE_ENV !== 'production') so local dev still
+ * works, and skip ClerkProvider in production until real keys are configured.
+ */
+function isClerkConfigured(): boolean {
+  const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  if (!key) return false
+  if (key.startsWith('pk_live_')) return true
+  if (key.startsWith('pk_test_') && process.env.NODE_ENV !== 'production') return true
+  return false
+}
+
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params
 
@@ -104,6 +120,27 @@ export default async function LocaleLayout({ children, params }: Props) {
   const bcp47 = LOCALE_BCP47[locale as SupportedLocale]
   const dir = LOCALE_DIR[locale as SupportedLocale]
   const clerkLocalization = CLERK_LOCALIZATIONS[locale as SupportedLocale]
+  const clerkReady = isClerkConfigured()
+
+  const innerContent = (
+    <NextIntlClientProvider messages={messages}>
+      {/* Sticky top nav: tablet and wider only. */}
+      <TopNav clerkReady={clerkReady} />
+
+      {/*
+        Page content area. On mobile the fixed BottomTabBar (56 px +
+        safe-area inset) sits on top of the viewport, so we add
+        equivalent bottom padding to keep content clear of it.
+        On md+ the TopNav is sticky and there is no bottom bar.
+      */}
+      <div className="pb-20 md:pb-0">
+        {children}
+      </div>
+
+      {/* Mobile bottom tab bar: hidden on md+. */}
+      <BottomTabBar />
+    </NextIntlClientProvider>
+  )
 
   return (
     <html
@@ -123,33 +160,21 @@ export default async function LocaleLayout({ children, params }: Props) {
           {SKIP_TO_MAIN}
         </a>
 
-        <ClerkProvider
-          localization={clerkLocalization}
-          signInUrl={`/${locale}/sign-in`}
-          signUpUrl={`/${locale}/sign-up`}
-          signInFallbackRedirectUrl={`/${locale}/pay-gap`}
-          signUpFallbackRedirectUrl={`/${locale}/pay-gap`}
-        >
-          <ConvexClerkProvider>
-            <NextIntlClientProvider messages={messages}>
-              {/* Sticky top nav: tablet and wider only. */}
-              <TopNav />
-
-              {/*
-                Page content area. On mobile the fixed BottomTabBar (56 px +
-                safe-area inset) sits on top of the viewport, so we add
-                equivalent bottom padding to keep content clear of it.
-                On md+ the TopNav is sticky and there is no bottom bar.
-              */}
-              <div className="pb-20 md:pb-0">
-                {children}
-              </div>
-
-              {/* Mobile bottom tab bar: hidden on md+. */}
-              <BottomTabBar />
-            </NextIntlClientProvider>
-          </ConvexClerkProvider>
-        </ClerkProvider>
+        {clerkReady ? (
+          <ClerkProvider
+            localization={clerkLocalization}
+            signInUrl={`/${locale}/sign-in`}
+            signUpUrl={`/${locale}/sign-up`}
+            signInFallbackRedirectUrl={`/${locale}/pay-gap`}
+            signUpFallbackRedirectUrl={`/${locale}/pay-gap`}
+          >
+            <ConvexClerkProvider>
+              {innerContent}
+            </ConvexClerkProvider>
+          </ClerkProvider>
+        ) : (
+          innerContent
+        )}
       </body>
     </html>
   )

@@ -13,11 +13,15 @@
  *     </nav>
  *   </header>
  *
- * Signed-out visitors: brand + Pricing link + Sign in / Get started.
- * Signed-in users: brand + full app nav + UserButton.
+ * When clerkReady=true (production Clerk keys configured):
+ *   Signed-out visitors: brand + Pricing link + Sign in / Get started.
+ *   Signed-in users: brand + full app nav + UserButton.
+ *
+ * When clerkReady=false (test keys or no keys in production):
+ *   Always renders the signed-out marketing nav; auth is not available.
  *
  * Active state: driven by usePathname (next-intl, locale-stripped).
- * Auth state: driven by Clerk's SignedIn/SignedOut helpers.
+ * Auth state: driven by Clerk's SignedIn/SignedOut helpers (when ready).
  */
 
 import { useTranslations } from 'next-intl'
@@ -59,7 +63,7 @@ function NavLink({
   )
 }
 
-export function TopNav() {
+export function TopNav({ clerkReady = false }: { clerkReady?: boolean }) {
   const tc = useTranslations('common')
   const to = useTranslations('onboarding')
   const tm = useTranslations('marketing')
@@ -80,54 +84,84 @@ export function TopNav() {
             {tc('app_name')}
           </Link>
 
-          {/* App nav links: only shown when signed in */}
-          <SignedIn>
-            <ul className="flex items-center gap-1 list-none flex-1">
-              {APP_NAV_ITEMS.map(({ labelKey, path }) => {
-                const isActive =
-                  pathname === path || pathname.startsWith(path + '/')
-                return (
-                  <li key={path}>
-                    <NavLink href={path} isActive={isActive}>
-                      {tc(labelKey as CommonNavKey)}
+          {clerkReady ? (
+            <>
+              {/* App nav links: only shown when signed in */}
+              <SignedIn>
+                <ul className="flex items-center gap-1 list-none flex-1">
+                  {APP_NAV_ITEMS.map(({ labelKey, path }) => {
+                    const isActive =
+                      pathname === path || pathname.startsWith(path + '/')
+                    return (
+                      <li key={path}>
+                        <NavLink href={path} isActive={isActive}>
+                          {tc(labelKey as CommonNavKey)}
+                        </NavLink>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </SignedIn>
+
+              {/* Marketing nav links: only shown when signed out */}
+              <SignedOut>
+                <ul className="flex items-center gap-1 list-none flex-1">
+                  <li>
+                    <NavLink href="/pricing" isActive={pathname === '/pricing'}>
+                      {tm('nav_pricing')}
                     </NavLink>
                   </li>
-                )
-              })}
-            </ul>
-          </SignedIn>
+                </ul>
+              </SignedOut>
 
-          {/* Marketing nav links: only shown when signed out */}
-          <SignedOut>
-            <ul className="flex items-center gap-1 list-none flex-1">
-              <li>
-                <NavLink href="/pricing" isActive={pathname === '/pricing'}>
-                  {tm('nav_pricing')}
-                </NavLink>
-              </li>
-            </ul>
-          </SignedOut>
+              {/* Auth controls */}
+              <div className="flex items-center gap-3 shrink-0">
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+                <SignedOut>
+                  <Link
+                    href="/sign-in"
+                    className="px-4 py-1.5 rounded-sm text-caption font-medium text-ink-soft hover:text-ink transition-colors"
+                  >
+                    {to('sign_in')}
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="px-4 py-1.5 rounded-sm bg-accent text-on-accent text-caption font-semibold transition-opacity hover:opacity-90"
+                  >
+                    {to('sign_up')}
+                  </Link>
+                </SignedOut>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Clerk not ready: always show the signed-out marketing nav. */}
+              <ul className="flex items-center gap-1 list-none flex-1">
+                <li>
+                  <NavLink href="/pricing" isActive={pathname === '/pricing'}>
+                    {tm('nav_pricing')}
+                  </NavLink>
+                </li>
+              </ul>
 
-          {/* Auth controls */}
-          <div className="flex items-center gap-3 shrink-0">
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-            <SignedOut>
-              <Link
-                href="/sign-in"
-                className="px-4 py-1.5 rounded-sm text-caption font-medium text-ink-soft hover:text-ink transition-colors"
-              >
-                {to('sign_in')}
-              </Link>
-              <Link
-                href="/sign-up"
-                className="px-4 py-1.5 rounded-sm bg-accent text-on-accent text-caption font-semibold transition-opacity hover:opacity-90"
-              >
-                {to('sign_up')}
-              </Link>
-            </SignedOut>
-          </div>
+              <div className="flex items-center gap-3 shrink-0">
+                <Link
+                  href="/sign-in"
+                  className="px-4 py-1.5 rounded-sm text-caption font-medium text-ink-soft hover:text-ink transition-colors"
+                >
+                  {to('sign_in')}
+                </Link>
+                <Link
+                  href="/sign-up"
+                  className="px-4 py-1.5 rounded-sm bg-accent text-on-accent text-caption font-semibold transition-opacity hover:opacity-90"
+                >
+                  {to('sign_up')}
+                </Link>
+              </div>
+            </>
+          )}
         </nav>
       </div>
     </header>
