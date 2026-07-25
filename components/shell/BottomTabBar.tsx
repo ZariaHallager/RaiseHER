@@ -55,7 +55,7 @@ export function BottomTabBar() {
                 className={[
                   'flex flex-col items-center gap-0.5 py-2 px-1',
                   'text-label font-medium transition-colors',
-                  isActive ? 'text-accent-deep' : 'text-ink-muted',
+                  isActive ? 'text-accent-deep' : 'text-ink-soft',
                 ].join(' ')}
               >
                 <TabIcon name={icon} size={22} />
