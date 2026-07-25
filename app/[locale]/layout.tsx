@@ -124,6 +124,13 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   const innerContent = (
     <NextIntlClientProvider messages={messages}>
+      {/*
+        RouteAnnouncer inside the provider so its usePathname call has access
+        to the locale context. It renders before all nav landmarks so screen
+        readers don't include it in nav regions.
+      */}
+      <RouteAnnouncer />
+
       {/* Sticky top nav: tablet and wider only. */}
       <TopNav clerkReady={clerkReady} />
 
@@ -149,11 +156,6 @@ export default async function LocaleLayout({ children, params }: Props) {
       className={`${inter.variable} ${playfair.variable}`}
     >
       <body>
-        {/*
-          RouteAnnouncer lives outside the nav to prevent its sr-only paragraph
-          from being read as part of navigation landmarks.
-        */}
-        <RouteAnnouncer />
 
         {/* First focusable element on every page; resolves to #main-content. */}
         <a href="#main-content" className="skip-link">
