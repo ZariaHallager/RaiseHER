@@ -293,7 +293,7 @@ export default async function LandingPage({ params }: Props) {
             </nav>
           </div>
 
-          <p className="text-caption text-ink-muted text-center sm:text-left">
+          <p className="text-caption text-ink-soft text-center sm:text-left">
             {t('footer_tagline')}
           </p>
         </div>

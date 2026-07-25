@@ -144,32 +144,38 @@
   --ai-mark-light: var(--color-ai-mark-light);
 }
 
-/* ── Base reset ────────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ── Base reset ────────────────────────────────────────────────────────────
+   All rules here go into @layer base so Tailwind utility classes (text-ink,
+   text-ink-inverse, text-on-accent, etc.) can override them on the same
+   element without needing !important.  In Tailwind v4 the utilities layer
+   always wins over the base layer, regardless of CSS source order.        */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-html,
-body {
-  height: 100%;
-  background: var(--color-canvas);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  html,
+  body {
+    height: 100%;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-a {
-  color: var(--color-accent-deep);
-  text-decoration: none;
-}
+  a {
+    color: var(--color-accent-deep);
+    text-decoration: none;
+  }
 
-a:hover {
-  text-decoration: underline;
+  a:hover {
+    text-decoration: underline;
+  }
 }
 
 /* ── Focus visible ring ────────────────────────────────────
