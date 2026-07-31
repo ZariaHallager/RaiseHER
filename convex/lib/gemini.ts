@@ -11,7 +11,7 @@
  */
 import { GoogleGenerativeAI, type GenerateContentResult } from '@google/generative-ai'
 
-export const DEFAULT_MODEL = 'gemini-1.5-flash'
+export const DEFAULT_MODEL = 'gemini-3.5-flash-lite'
 
 export interface GeminiResponse {
   text: string

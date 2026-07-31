@@ -1,55 +1,59 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
-# dependencies
+# Dependencies
 node_modules/
 
-# Expo
-.expo/
-dist/
-web-build/
-expo-env.d.ts
-
-# Native
-.kotlin/
-*.orig.*
-*.jks
+# Environment & secrets
+.env*
+!.env.example
+*.pem
+*.key
 *.p8
 *.p12
-*.key
+*.jks
 *.mobileprovision
 
-# Metro
-.metro-health-check*
+# Build outputs
+.next/
+out/
+dist/
+web-build/
 
-# debug
+# Native (Expo/React Native)
+.expo/
+.kotlin/
+/ios
+/android
+*.orig.*
+expo-env.d.ts
+
+# IDE & editors
+.cursor/
+.vscode/
+*.swp
+*.swo
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Testing
+test-results/
+playwright-report/
+coverage/
+
+# Deployment
+.vercel/
+
+# TypeScript
+*.tsbuildinfo
+
+# Debug logs
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+.metro-health-check*
 
-# macOS
-.DS_Store
-*.pem
-
-# local env files
-.env*.local
-
-# typescript
-*.tsbuildinfo
-
-# generated native folders
-/ios
-/android
-.vercel
-.env*
-
-# Next.js build output
-.next/
-out/
-
-# Playwright
-test-results/
-playwright-report/
-
-# Skills and agent caches (local only)
+# Local agent/AI caches
 .agents/
 .claude/
+.convex/local/

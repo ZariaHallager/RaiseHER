@@ -37,13 +37,29 @@ export const requestPayGapAnalysis = mutation({
       throw new Error('Not authenticated.')
     }
 
-    const user = await ctx.db
+    let user = await ctx.db
       .query('users')
       .withIndex('by_clerk_id', (q) => q.eq('clerkId', identity.subject))
       .unique()
 
+    // Auto-create user for local development (webhooks can't reach localhost)
     if (!user) {
-      throw new Error('User record not found. Complete onboarding first.')
+      const now = Date.now()
+      const userId = await ctx.db.insert('users', {
+        clerkId: identity.subject,
+        email: identity.email ?? undefined,
+        firstName: identity.givenName ?? undefined,
+        lastName: identity.familyName ?? undefined,
+        preferredLanguage: args.targetLanguage.split('-')[0] || 'en',
+        isFounder: false,
+        createdAt: now,
+        updatedAt: now,
+      })
+      user = await ctx.db.get(userId)
+    }
+
+    if (!user) {
+      throw new Error('Failed to create or find user record.')
     }
 
     await ctx.scheduler.runAfter(0, internal.payGapAction.generatePayGapInternal, {

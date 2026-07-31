@@ -233,6 +233,34 @@ export const completeSession = mutation({
   },
 })
 
+/** Deletes a session and all its turns. */
+export const deleteSession = mutation({
+  args: { sessionId: v.id('rehearsalSessions') },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) throw new Error('Not authenticated')
+
+    const session = await ctx.db.get(args.sessionId)
+    if (!session) throw new Error('Session not found')
+
+    const user = await ctx.db
+      .query('users')
+      .withIndex('by_clerk_id', (q) => q.eq('clerkId', identity.subject))
+      .unique()
+    if (!user || session.userId !== user._id) throw new Error('Unauthorized')
+
+    const turns = await ctx.db
+      .query('rehearsalTurns')
+      .withIndex('by_session_created', (q) => q.eq('sessionId', args.sessionId))
+      .take(200)
+    for (const turn of turns) {
+      await ctx.db.delete(turn._id)
+    }
+
+    await ctx.db.delete(args.sessionId)
+  },
+})
+
 // ---------------------------------------------------------------------------
 // Internal queries (called from rehearsalAction)
 // ---------------------------------------------------------------------------

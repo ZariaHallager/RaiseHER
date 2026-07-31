@@ -83,6 +83,14 @@ const SCENARIO_DESC_KEYS: Record<ScenarioKey, 'scenario_ask_raise_desc' | 'scena
   negotiate_promotion: 'scenario_negotiate_promotion_desc',
 }
 
+/** Converts a raw scenario key like "ask_raise" into a readable title like "Ask Raise". */
+function formatScenarioKey(key: string): string {
+  return key
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
 // ---------------------------------------------------------------------------
 // Web Speech API detection helpers
 // ---------------------------------------------------------------------------
@@ -108,14 +116,17 @@ interface SpeechRecognitionInstance {
 
 interface SpeechRecognitionResultEvent {
   results: SpeechRecognitionResultList
+  resultIndex: number
 }
 
 interface SpeechRecognitionResultList {
   [index: number]: SpeechRecognitionResult | undefined
+  length: number
 }
 
 interface SpeechRecognitionResult {
   [index: number]: SpeechRecognitionAlternative | undefined
+  isFinal: boolean
 }
 
 interface SpeechRecognitionAlternative {
@@ -161,7 +172,18 @@ export function RehearsalRoom() {
   const [voiceActive, setVoiceActive] = useState(false)
   const [voiceState, setVoiceState] = useState<VoiceState>('idle')
   const [micState, setMicState] = useState<MicState>('unknown')
+  const [voiceError, setVoiceError] = useState<string | null>(null)
+  const [voiceErrorRetryable, setVoiceErrorRetryable] = useState(false)
+  const [interimTranscript, setInterimTranscript] = useState('')
   const recognitionRef = useRef<SpeechRecognitionInstance | null>(null)
+  const retryCountRef = useRef(0)
+  const MAX_AUTO_RETRIES = 2
+  // Tracks latest interim text for use inside async callbacks (avoids stale closure)
+  const interimTranscriptRef = useRef('')
+  // Set to true when we stop recognition intentionally (to suppress onend restart)
+  const intentionalStopRef = useRef(false)
+  // Silence detection timer: submits interim text if no speech for 2s
+  const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // ── Text input ────────────────────────────────────────────────────────────
   const [textInput, setTextInput] = useState('')
@@ -285,29 +307,138 @@ export function RehearsalRoom() {
   // Speak the latest AI turn when it changes (voice mode only)
   const lastAITurnContent = turns?.filter((t) => t.role === 'ai').at(-1)?.content
   const spokenRef = useRef<string | null>(null)
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([])
+
+  // Load voices (they load asynchronously in Chrome)
+  useEffect(() => {
+    if (!('speechSynthesis' in window)) return
+
+    const loadVoices = () => {
+      const voices = window.speechSynthesis.getVoices()
+      if (voices.length > 0) {
+        setAvailableVoices(voices)
+        console.log('[TTS] Loaded', voices.length, 'voices')
+        // Log available English voices for debugging
+        const englishVoices = voices.filter(v => v.lang.startsWith('en'))
+        console.log('[TTS] English voices:', englishVoices.map(v => `${v.name} (${v.lang})`))
+      }
+    }
+
+    loadVoices()
+    window.speechSynthesis.onvoiceschanged = loadVoices
+
+    return () => {
+      window.speechSynthesis.onvoiceschanged = null
+    }
+  }, [])
+
+  // Select the best voice for speaking
+  const getBestVoice = useCallback((langPrefix: string): SpeechSynthesisVoice | null => {
+    const matchingVoices = availableVoices.filter((v) => v.lang.startsWith(langPrefix))
+
+    if (matchingVoices.length === 0) {
+      console.log('[TTS] No voices for language:', langPrefix)
+      return null
+    }
+
+    // Priority list for high-quality voices (macOS/Chrome/Windows)
+    const highQualityNames = [
+      'samantha', 'ava', 'allison', 'zoe', 'joana', 'susan', 'kate', 'serena', // macOS premium
+      'google us english', 'google uk english female', // Chrome
+      'microsoft zira', 'microsoft aria', 'jenny', // Windows neural
+      'enhanced', 'premium', 'natural', 'neural'
+    ]
+
+    // Try to find a high-quality voice
+    for (const name of highQualityNames) {
+      const found = matchingVoices.find(v => v.name.toLowerCase().includes(name))
+      if (found) {
+        console.log('[TTS] Selected voice:', found.name)
+        return found
+      }
+    }
+
+    // Prefer non-default voices as they tend to be higher quality
+    const nonDefault = matchingVoices.find(v => !v.default)
+    if (nonDefault) {
+      console.log('[TTS] Using non-default voice:', nonDefault.name)
+      return nonDefault
+    }
+
+    console.log('[TTS] Using fallback voice:', matchingVoices[0]?.name)
+    return matchingVoices[0] || null
+  }, [availableVoices])
+
+  // Split text into natural sentence chunks for conversational TTS pacing
+  const splitIntoSentences = useCallback((text: string): string[] => {
+    const raw = text.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) || [text]
+    return raw.map(s => s.trim()).filter(s => s.length > 0)
+  }, [])
+
+  // Speak text chunked by sentence with short pauses between each for natural rhythm
+  const speakChunked = useCallback((
+    text: string,
+    voice: SpeechSynthesisVoice | null,
+    bcp47: string,
+    onDone: () => void
+  ) => {
+    const sentences = splitIntoSentences(text)
+
+    const speakNext = (index: number) => {
+      if (index >= sentences.length) {
+        onDone()
+        return
+      }
+
+      const utter = new SpeechSynthesisUtterance(sentences[index])
+      if (voice) utter.voice = voice
+      utter.lang = bcp47
+      utter.rate = 0.9
+      utter.pitch = 1.05
+
+      utter.onend = () => {
+        if (index < sentences.length - 1) {
+          // 200-400ms natural pause between sentences
+          setTimeout(() => speakNext(index + 1), 200 + Math.random() * 200)
+        } else {
+          onDone()
+        }
+      }
+
+      utter.onerror = () => {
+        // Skip failed chunk and continue
+        setTimeout(() => speakNext(index + 1), 100)
+      }
+
+      window.speechSynthesis.speak(utter)
+    }
+
+    speakNext(0)
+  }, [splitIntoSentences])
 
   useEffect(() => {
     if (!voiceActive || !lastAITurnContent) return
     if (lastAITurnContent === spokenRef.current) return
+    if (availableVoices.length === 0) {
+      console.log('[TTS] Voices not loaded yet, waiting...')
+      return
+    }
     spokenRef.current = lastAITurnContent
 
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel()
-      const utter = new SpeechSynthesisUtterance(lastAITurnContent)
       const bcp47 = LOCALE_TO_BCP47[locale]
-      const voices = window.speechSynthesis.getVoices()
-      const match = voices.find((v) => v.lang.startsWith(bcp47.split('-')[0]))
-      if (match) utter.voice = match
-      utter.lang = bcp47
-      utter.onend = () => {
+      const langPrefix = bcp47.split('-')[0]
+      const selectedVoice = getBestVoice(langPrefix)
+
+      speakChunked(lastAITurnContent, selectedVoice, bcp47, () => {
         if (voiceActive && !aiThinking) {
           startListening()
         }
-      }
-      window.speechSynthesis.speak(utter)
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastAITurnContent, voiceActive])
+  }, [lastAITurnContent, voiceActive, availableVoices, getBestVoice, speakChunked])
 
   // ── Voice permission flow ─────────────────────────────────────────────────
 
@@ -319,7 +450,7 @@ export function RehearsalRoom() {
       setMicState('granted')
       setVoiceActive(true)
       startListening()
-    } catch {
+    } catch (err) {
       setMicState('denied')
       setVoiceActive(false)
     }
@@ -334,39 +465,211 @@ export function RehearsalRoom() {
 
   const startListening = useCallback(() => {
     const SR = getSpeechRecognition()
-    if (!SR) return
+    if (!SR) {
+      console.warn('[Rehearsal] SpeechRecognition not available')
+      return
+    }
 
     recognitionRef.current?.abort()
 
     const rec = new SR()
     rec.lang = LOCALE_TO_BCP47[locale]
-    rec.continuous = false
-    rec.interimResults = false
+    rec.continuous = true
+    rec.interimResults = true
     rec.maxAlternatives = 1
 
-    rec.onstart = () => setVoiceState('listening')
-    rec.onend = () => {
-      setVoiceState('idle')
+    rec.onstart = () => {
+      console.log('[Rehearsal] Speech recognition started')
+      setVoiceState('listening')
     }
-    rec.onerror = () => {
+    rec.onend = () => {
+      console.log('[Rehearsal] Speech recognition ended')
       setVoiceState('idle')
+      setInterimTranscript('')
+      interimTranscriptRef.current = ''
+      // Clear any pending silence timer
+      if (silenceTimerRef.current) {
+        clearTimeout(silenceTimerRef.current)
+        silenceTimerRef.current = null
+      }
+      if (intentionalStopRef.current) {
+        // We stopped deliberately (after final result or manual stop) — don't restart
+        intentionalStopRef.current = false
+        return
+      }
+      // Browser ended unexpectedly (long-silence timeout) — restart if still in voice mode
+      if (voiceActive && !aiThinking) {
+        setTimeout(() => {
+          if (voiceActive && !aiThinking) {
+            startListening()
+          }
+        }, 300)
+      }
+    }
+    rec.onerror = (event: unknown) => {
+      const errorEvent = event as { error?: string; message?: string }
+      const errorCode = errorEvent.error ?? 'unknown'
+      console.warn('[Rehearsal] Speech recognition error:', errorCode, {
+        isSecureContext: typeof window !== 'undefined' ? window.isSecureContext : 'n/a',
+        protocol: typeof window !== 'undefined' ? window.location.protocol : 'n/a',
+        userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'n/a',
+        retryCount: retryCountRef.current,
+      })
+      // Clear interim text and silence timer on any error
+      if (silenceTimerRef.current) {
+        clearTimeout(silenceTimerRef.current)
+        silenceTimerRef.current = null
+      }
+      setInterimTranscript('')
+      interimTranscriptRef.current = ''
+      setVoiceState('idle')
+
+      if (errorCode === 'network') {
+        const isSecure = typeof window !== 'undefined' && window.isSecureContext
+
+        if (!isSecure) {
+          // Genuine HTTPS issue — no point retrying
+          setVoiceError(t('voice_error_https'))
+          setVoiceErrorRetryable(false)
+          setVoiceActive(false)
+        } else if (retryCountRef.current < MAX_AUTO_RETRIES) {
+          // Transient connectivity blip — auto-retry silently
+          retryCountRef.current += 1
+          const attempt = retryCountRef.current
+          console.log(`[Rehearsal] Network error, auto-retry ${attempt}/${MAX_AUTO_RETRIES}`)
+          setVoiceError(t('voice_error_network_retrying', { attempt, max: MAX_AUTO_RETRIES }))
+          setVoiceErrorRetryable(false)
+          setTimeout(() => {
+            if (voiceActive && !aiThinking) {
+              startListening()
+            }
+          }, 1500 * attempt)
+        } else {
+          // Exhausted retries — let user decide
+          console.warn('[Rehearsal] Network error persists after retries — disabling voice')
+          setVoiceError(t('voice_error_network'))
+          setVoiceErrorRetryable(true)
+          setVoiceActive(false)
+        }
+      } else if (errorCode === 'not-allowed') {
+        console.warn('[Rehearsal] Microphone permission denied by user or browser policy')
+        setVoiceError(t('voice_error_mic_denied'))
+        setVoiceErrorRetryable(false)
+        setVoiceActive(false)
+        setMicState('denied')
+      } else if (errorCode === 'no-speech' && voiceActive) {
+        // Silence timeout — restart quietly
+        setVoiceError(null)
+        setTimeout(() => {
+          if (voiceActive && !aiThinking) {
+            startListening()
+          }
+        }, 500)
+      } else if (errorCode === 'aborted') {
+        // Intentional abort — no error
+        setVoiceError(null)
+      } else if (errorCode === 'audio-capture') {
+        setVoiceError(t('voice_error_audio_capture'))
+        setVoiceErrorRetryable(true)
+        setVoiceActive(false)
+      } else if (errorCode === 'service-not-allowed') {
+        setVoiceError(t('voice_error_service_not_allowed'))
+        setVoiceErrorRetryable(false)
+        setVoiceActive(false)
+      } else {
+        console.warn('[Rehearsal] Unhandled speech recognition error code:', errorCode)
+        setVoiceError(t('voice_error_generic', { code: errorCode }))
+        setVoiceErrorRetryable(true)
+        setVoiceActive(false)
+      }
     }
     rec.onresult = (event: SpeechRecognitionResultEvent) => {
-      const transcript = event.results[0]?.[0]?.transcript ?? ''
-      if (transcript.trim()) {
+      // Accumulate interim and final text from the new results since resultIndex
+      let interimText = ''
+      let finalText = ''
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const result = event.results[i]
+        const text = result?.[0]?.transcript ?? ''
+        if (result?.isFinal) {
+          finalText += text
+        } else {
+          interimText += text
+        }
+      }
+
+      console.log('[Rehearsal] Got transcript — interim:', JSON.stringify(interimText), 'final:', JSON.stringify(finalText))
+
+      // Reset the silence timer on any speech activity
+      if (silenceTimerRef.current) {
+        clearTimeout(silenceTimerRef.current)
+        silenceTimerRef.current = null
+      }
+
+      if (finalText.trim()) {
+        // Final result: stop continuous recognition and submit
+        setInterimTranscript('')
+        interimTranscriptRef.current = ''
         setVoiceState('processing')
-        submitUserTurn(transcript, 'voice')
+        intentionalStopRef.current = true
+        recognitionRef.current?.stop()
+        submitUserTurn(finalText.trim(), 'voice')
+      } else if (interimText.trim()) {
+        // Interim result: show real-time transcription in the input area
+        setInterimTranscript(interimText)
+        interimTranscriptRef.current = interimText
+
+        // Silence detection: if no new results arrive within 2s, treat as final
+        silenceTimerRef.current = setTimeout(() => {
+          const pending = interimTranscriptRef.current.trim()
+          if (pending) {
+            setInterimTranscript('')
+            interimTranscriptRef.current = ''
+            setVoiceState('processing')
+            intentionalStopRef.current = true
+            recognitionRef.current?.stop()
+            submitUserTurn(pending, 'voice')
+          }
+        }, 2000)
       }
     }
 
     recognitionRef.current = rec
-    rec.start()
+
+    try {
+      rec.start()
+    } catch (err) {
+      console.error('[Rehearsal] Failed to start recognition:', err)
+      setVoiceState('idle')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locale])
+  }, [locale, voiceActive, aiThinking])
 
   function stopListening() {
+    if (silenceTimerRef.current) {
+      clearTimeout(silenceTimerRef.current)
+      silenceTimerRef.current = null
+    }
+    setInterimTranscript('')
+    interimTranscriptRef.current = ''
+    intentionalStopRef.current = true
     recognitionRef.current?.stop()
     setVoiceState('idle')
+  }
+
+  function retryVoice() {
+    retryCountRef.current = 0
+    setVoiceError(null)
+    setVoiceErrorRetryable(false)
+    setInterimTranscript('')
+    interimTranscriptRef.current = ''
+    setVoiceActive(true)
+    startListening()
+  }
+
+  function dismissVoiceError() {
+    setVoiceError(null)
+    setVoiceErrorRetryable(false)
   }
 
   function toggleVoice() {
@@ -375,7 +678,12 @@ export function RehearsalRoom() {
       window.speechSynthesis?.cancel()
       setVoiceActive(false)
       setVoiceState('idle')
+      setInterimTranscript('')
+      interimTranscriptRef.current = ''
     } else if (micState === 'granted') {
+      retryCountRef.current = 0
+      setVoiceError(null)
+      setVoiceErrorRetryable(false)
       setVoiceActive(true)
       startListening()
     } else if (micState === 'unknown') {
@@ -432,6 +740,20 @@ export function RehearsalRoom() {
     window.speechSynthesis?.cancel()
     // handleStartSession sets stage to 'session-active' itself
     handleStartSession(selectedScenario)
+  }
+
+  function handleContinueSession(existingSessionId: Id<'rehearsalSessions'>, scenarioKey: string) {
+    // Continue an existing in-progress session
+    setSessionId(existingSessionId)
+    setSelectedScenario(scenarioKey as ScenarioKey)
+    setScorecardData(null)
+    setScorecardError(null)
+    setScorecardLoading(false)
+    setAiError(null)
+    setTextInput('')
+    setVoiceState('idle')
+    spokenRef.current = null
+    setStage('session-active')
   }
 
   function handleReset() {
@@ -498,7 +820,12 @@ export function RehearsalRoom() {
             <ul className="space-y-2">
               {pastSessions.map((session) => (
                 <li key={session._id}>
-                  <PastSessionRow session={session} t={t} locale={locale} />
+                  <PastSessionRow
+                    session={session}
+                    t={t}
+                    locale={locale}
+                    onContinue={session.status === 'in_progress' ? handleContinueSession : undefined}
+                  />
                 </li>
               ))}
             </ul>
@@ -616,6 +943,32 @@ export function RehearsalRoom() {
           </p>
         )}
 
+        {/* Voice error */}
+        {voiceError && (
+          <div role="alert" className="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3">
+            <p className="text-caption text-amber-800">{voiceError}</p>
+            <p className="text-caption text-amber-600 mt-1">{t('voice_error_text_fallback')}</p>
+            <div className="flex gap-2 mt-2">
+              {voiceErrorRetryable && (
+                <button
+                  type="button"
+                  onClick={retryVoice}
+                  className="text-caption font-semibold text-amber-800 underline underline-offset-2 hover:text-amber-900"
+                >
+                  {t('voice_error_retry')}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={dismissVoiceError}
+                className="text-caption text-amber-600 underline underline-offset-2 hover:text-amber-700"
+              >
+                {t('voice_error_dismiss')}
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Voice controls */}
         {voiceActive && (
           <div className="flex items-center justify-between rounded-lg bg-accent/10 border border-accent/30 px-4 py-3">
@@ -659,15 +1012,58 @@ export function RehearsalRoom() {
           <textarea
             id={inputId}
             ref={inputRef}
-            value={textInput}
-            onChange={(e) => setTextInput(e.target.value)}
+            value={voiceState === 'listening' ? interimTranscript : textInput}
+            onChange={(e) => {
+              if (voiceState !== 'listening' && voiceState !== 'processing') setTextInput(e.target.value)
+            }}
             onKeyDown={handleKeyDown}
-            placeholder={t('input_placeholder')}
+            placeholder={
+              voiceState === 'listening'
+                ? t('listening')
+                : voiceState === 'processing' && voiceActive
+                  ? t('voice_processing_input')
+                  : t('input_placeholder')
+            }
             rows={3}
+            readOnly={voiceState === 'listening' || (voiceState === 'processing' && voiceActive)}
             disabled={aiThinking || scorecardLoading}
-            className="w-full text-body bg-canvas text-ink border-[1.5px] border-border rounded-lg px-4 py-3 placeholder:text-ink-muted resize-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-deep disabled:opacity-50"
+            className={[
+              'w-full text-body bg-canvas border-[1.5px] rounded-lg px-4 py-3 resize-none',
+              'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-deep',
+              'disabled:opacity-50',
+              voiceState === 'listening'
+                ? 'text-ink-soft border-accent/60 italic cursor-default placeholder:not-italic placeholder:text-accent-deep/60'
+                : voiceState === 'processing' && voiceActive
+                  ? 'text-ink-soft border-accent/30 cursor-default placeholder:text-ink-muted'
+                  : 'text-ink border-border placeholder:text-ink-muted',
+            ].join(' ')}
             aria-label={t('input_placeholder')}
+            aria-live={voiceState === 'listening' ? 'polite' : undefined}
           />
+
+          {/* Real-time voice transcription status — appears directly below the textarea */}
+          {voiceActive && (voiceState === 'listening' || voiceState === 'processing') && (
+            <div
+              role="status"
+              aria-live="polite"
+              className="flex items-center gap-2 px-1 -mt-1"
+            >
+              {voiceState === 'listening' ? (
+                <>
+                  <VoicePulse />
+                  <span className="text-caption text-accent-deep">
+                    {interimTranscript.trim() ? t('voice_transcribing') : t('voice_speak_now')}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <ThinkingDots />
+                  <span className="text-caption text-ink-soft">{t('voice_processing_input')}</span>
+                </>
+              )}
+            </div>
+          )}
+
           <div className="flex items-center justify-between gap-3">
             {/* Voice toggle (if supported and not yet decided) */}
             {voiceSupported && micState === 'granted' && !voiceActive && (
@@ -842,36 +1238,115 @@ interface PastSessionRowProps {
   }
   t: ReturnType<typeof useTranslations<'rehearsal'>>
   locale: string
+  onContinue?: (sessionId: Id<'rehearsalSessions'>, scenarioKey: string) => void
 }
 
-function PastSessionRow({ session, t, locale }: PastSessionRowProps) {
+function PastSessionRow({ session, t, locale, onContinue }: PastSessionRowProps) {
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const deleteSessionMutation = useMutation(api.rehearsal.deleteSession)
+
   const date = new Date(session.startedAt).toLocaleDateString(locale, {
     month: 'short',
     day: 'numeric',
   })
 
   const titleKey = (SCENARIO_TITLE_KEYS as Record<string, string | undefined>)[session.scenarioKey]
+  const isInProgress = session.status === 'in_progress'
+  const canContinue = isInProgress && onContinue
+
+  async function handleDeleteConfirm() {
+    setIsDeleting(true)
+    try {
+      await deleteSessionMutation({ sessionId: session._id })
+      // Row disappears reactively via the listSessions query
+    } catch {
+      setIsDeleting(false)
+      setConfirmDelete(false)
+    }
+  }
 
   return (
-    <div className="flex items-center justify-between rounded-lg border border-border bg-surface px-4 py-3 text-caption">
-      <div className="flex flex-col gap-0.5">
-        <span className="text-body font-semibold text-ink">
-          {titleKey ? t(titleKey) : session.scenarioKey}
+    <div className="flex items-center gap-3 rounded-lg border border-border bg-surface px-4 py-3">
+      {/* Title + meta */}
+      <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+        <span className="text-body font-semibold text-ink truncate">
+          {titleKey ? t(titleKey) : formatScenarioKey(session.scenarioKey)}
         </span>
         <span className="text-caption text-ink-soft">
-          {date} &middot; {session.turnCount} {session.turnCount === 1 ? 'turn' : 'turns'}
+          {date} &middot; {t('turns_count', { count: session.turnCount })}
         </span>
       </div>
-      <span
-        className={[
-          'text-caption font-bold px-2 py-1 rounded-sm',
-          session.status === 'completed'
-            ? 'bg-ink text-ink-inverse'
-            : 'bg-border text-ink-soft',
-        ].join(' ')}
-      >
-        {session.status === 'completed' ? t('session_completed') : t('session_in_progress')}
-      </span>
+
+      {/* Right side: actions or inline delete confirmation */}
+      <div className="flex items-center gap-2 shrink-0">
+        {confirmDelete ? (
+          <>
+            <span className="text-caption text-ink-soft hidden sm:inline">
+              {t('delete_session_confirm')}
+            </span>
+            <button
+              type="button"
+              onClick={() => setConfirmDelete(false)}
+              disabled={isDeleting}
+              className="text-caption text-ink-soft underline underline-offset-2 hover:text-ink disabled:opacity-50"
+            >
+              {t('delete_session_cancel')}
+            </button>
+            <button
+              type="button"
+              onClick={handleDeleteConfirm}
+              disabled={isDeleting}
+              className="text-caption font-semibold text-error underline underline-offset-2 hover:opacity-75 disabled:opacity-50"
+            >
+              {isDeleting ? t('delete_session_deleting') : t('delete_session_confirm_action')}
+            </button>
+          </>
+        ) : (
+          <>
+            {canContinue && (
+              <button
+                type="button"
+                onClick={() => onContinue(session._id, session.scenarioKey)}
+                className="text-caption font-bold text-accent-deep hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-deep rounded-sm"
+              >
+                {t('continue')}
+              </button>
+            )}
+            <span className="flex items-center gap-1.5">
+              <span
+                className={[
+                  'w-1.5 h-1.5 rounded-full shrink-0',
+                  session.status === 'completed'
+                    ? 'bg-ink-soft'
+                    : 'bg-accent-deep',
+                ].join(' ')}
+                aria-hidden="true"
+              />
+              <span
+                className={[
+                  'text-caption',
+                  session.status === 'completed'
+                    ? 'text-ink-soft'
+                    : 'text-accent-deep',
+                ].join(' ')}
+              >
+                {session.status === 'completed' ? t('session_completed') : t('session_in_progress')}
+              </span>
+            </span>
+            <button
+              type="button"
+              onClick={() => setConfirmDelete(true)}
+              aria-label={t('delete_session')}
+              className="p-1 -mr-1 rounded text-ink-muted hover:text-error hover:bg-error/10 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-deep"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4" aria-hidden="true">
+                <path fillRule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </>
+        )}
+      </div>
     </div>
   )
 }
