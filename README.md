@@ -14,7 +14,7 @@ RaiseHER gives you the data, the practice, and the paper trail to negotiate the 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[Request Beta Access](YOUR_BETA_LINK_HERE) · [Join the Waitlist](YOUR_WAITLIST_LINK_HERE) · Live Site: Coming Soon
+[Request Beta Access](https://docs.google.com/forms/d/e/1FAIpQLScrNRTCIJsnUykd7O44qhPw5s3e7hPZcNBotz-uCnyRY5URHQ/viewform) · [Join the Waitlist](https://raiseher.netlify.app/) · Live Site: Coming Soon
 
 </div>
 
